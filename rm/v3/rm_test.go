@@ -3,6 +3,7 @@ package rm
 import (
 	"context"
 	"io/ioutil"
+	"log"
 	"testing"
 
 	"github.com/dchest/uniuri"
@@ -36,4 +37,8 @@ func TestRMClient(t *testing.T) {
 	require.NoError(t, err)
 	require.NotEmpty(t, res.Item.CheckoutID)
 	require.NotEmpty(t, res.Item.URL)
+
+	pymt, err := client.GetPaymentByOrderID(ctx, req.Order.ID)
+	require.NoError(t, err)
+	log.Println(pymt)
 }

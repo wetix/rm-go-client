@@ -11,6 +11,7 @@ import (
 	"encoding/json"
 	"encoding/pem"
 	"io/ioutil"
+	l "log"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -216,6 +217,7 @@ func (c *Client) do(
 		return err
 	}
 
+	l.Println(string(b))
 	span.LogFields(
 		log.String("http.response.body", string(b)),
 	)
