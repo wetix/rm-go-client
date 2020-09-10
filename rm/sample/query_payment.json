@@ -1,0 +1,44 @@
+{
+  "item": {
+    "store": {
+      "id": "1597245150176673383",
+      "name": "Mohamed Yussuf Bin Jahubar Sathik",
+      "imageUrl": "https://storage.googleapis.com/rm-prod-asset/img/store.png",
+      "addressLine1": "GUGUSAN SEROJA KOTA DAMANSARA,  JALAN CECAWI 6,  KOTA DAMANSARA",
+      "addressLine2": "",
+      "postCode": "47810",
+      "city": "Petaling Jaya",
+      "state": "Selangor",
+      "country": "Malaysia",
+      "countryCode": "60",
+      "phoneNumber": "176473298",
+      "geoLocation": { "latitude": 3.1536596, "longitude": 101.5770785 },
+      "status": "ACTIVE",
+      "createdAt": "2020-09-10T08:31:49Z",
+      "updatedAt": "2020-09-10T08:31:49Z"
+    },
+    "referenceId": "2009106165088944",
+    "transactionId": "200910090708300425661809",
+    "order": {
+      "id": "128200910090623482313",
+      "title": "WeTix Sdn Bhd (TGV)",
+      "detail": "",
+      "amount": 2750
+    },
+    "terminalId": "",
+    "payee": {},
+    "currencyType": "MYR",
+    "balanceAmount": 2750,
+    "voucher": null,
+    "platform": "OPEN_API",
+    "method": "BOOST",
+    "transactionAt": "2020-09-10T09:07:30Z",
+    "type": "WEB_PAYMENT",
+    "status": "SUCCESS",
+    "region": "MALAYSIA",
+    "extraInfo": {},
+    "createdAt": "2020-09-10T09:07:08Z",
+    "updatedAt": "2020-09-10T09:07:30Z"
+  },
+  "code": "SUCCESS"
+}
