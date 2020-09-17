@@ -1,16 +1,35 @@
 package rm
 
+import (
+	"strings"
+
+	"github.com/tidwall/gjson"
+)
+
+const (
+	ErrorCodeTransactionNotFound = "TRANSACTION_NOT_FOUND"
+)
+
 // Error :
 type Error struct {
-	raw []byte
+	Code string
+	Msg  string
+	raw  []byte
+}
+
+func newError(b []byte) *Error {
+	e := new(Error)
+	e.Code = strings.ToUpper(strings.TrimSpace(gjson.GetBytes(b, "error.code").String()))
+	e.Msg = strings.TrimSpace(gjson.GetBytes(b, "error.message").String())
+	e.raw = b
+	return e
 }
 
 // Error :
 func (e Error) Error() string {
-	return "rm: " + string(e.raw)
+	return "rm: " + string(e.Code)
 }
 
-// Raw :
-func (e Error) Raw() []byte {
-	return e.raw
+func (e Error) Raw() string {
+	return string(e.raw)
 }

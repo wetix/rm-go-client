@@ -221,7 +221,7 @@ func (c *Client) do(
 	)
 
 	if res.StatusCode < 200 || res.StatusCode >= 400 {
-		return &Error{raw: b}
+		return newError(b)
 	}
 
 	err = json.Unmarshal(b, dest)
