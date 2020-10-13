@@ -10,7 +10,7 @@ import (
 	"testing"
 
 	"github.com/dchest/uniuri"
-	rm "github.com/si3nloong/rm-go-client/rm/v3"
+	rm "github.com/si3nloong/rm-go-client/v3"
 )
 
 func main() {
