@@ -7,24 +7,29 @@ import (
 
 type layout string
 
+// layout versions :
 const (
 	LayoutV1 layout = "v1"
 	LayoutV2 layout = "v2"
 	LayoutV3 layout = "v3"
 )
 
+// types :
 type (
 	PaymentType   string
 	PaymentMethod string
 )
 
+// payment types :
 const (
 	PaymentTypeWeb    PaymentType = "WEB_PAYMENT"
 	PaymentTypeMobile PaymentType = "MOBILE_PAYMENT"
 
-	PaymentMethodGrab  PaymentMethod = "GRABPAY_MY"
-	PaymentMethodTnG   PaymentMethod = "TNG_MY"
-	PaymentMethodBoost PaymentMethod = "BOOST_MY"
+	PaymentMethodGrab           PaymentMethod = "GRABPAY_MY"
+	PaymentMethodTnG            PaymentMethod = "TNG_MY"
+	PaymentMethodBoost          PaymentMethod = "BOOST_MY"
+	PaymentMethodWeChatMalaysia PaymentMethod = "WECHAT_MY"
+	PaymentMethodWeChatChina    PaymentMethod = "WECHAT_CN"
 )
 
 // CreatePaymentCheckoutRequest :

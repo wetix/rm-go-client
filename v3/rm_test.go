@@ -26,6 +26,7 @@ func TestRMClient(t *testing.T) {
 	req.Order.ID = uniuri.NewLen(10)
 	req.Order.Title = "Testing #" + req.Order.ID
 	req.Order.Amount = 1000
+	req.StoreID = "2808912573238362402"
 	req.NotifyURL = "https://www.google.com"
 	req.RedirectURL = "https://www.google.com"
 	resp, err := client.GetStores(ctx)

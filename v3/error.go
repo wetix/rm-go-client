@@ -6,8 +6,11 @@ import (
 	"github.com/tidwall/gjson"
 )
 
+// error codes :
 const (
-	ErrorCodeTransactionNotFound = "TRANSACTION_NOT_FOUND"
+	ErrorCodeTransactionNotFound              = "TRANSACTION_NOT_FOUND"
+	ErrorCodeStoreNotFound                    = "STORE_NOT_FOUND"
+	ErrorCodeMerchantSettlementAccNotVerified = "MERCHANT_SETTLEMENT_ACCOUNT_NOT_VERIFIED"
 )
 
 // Error :
