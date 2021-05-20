@@ -57,6 +57,6 @@ func main() {
 
 ## 📄 License
 
-[MIT](https://github.com/si3nloong/sqlike/blob/master/LICENSE)
+[MIT](https://github.com/si3nloong/rm-go-client/blob/master/LICENSE)
 
 Copyright (c) 2021-present, SianLoong Lee
