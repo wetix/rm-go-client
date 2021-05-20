@@ -25,11 +25,19 @@ const (
 	PaymentTypeWeb    PaymentType = "WEB_PAYMENT"
 	PaymentTypeMobile PaymentType = "MOBILE_PAYMENT"
 
-	PaymentMethodGrab           PaymentMethod = "GRABPAY_MY"
-	PaymentMethodTnG            PaymentMethod = "TNG_MY"
-	PaymentMethodBoost          PaymentMethod = "BOOST_MY"
-	PaymentMethodWeChatMalaysia PaymentMethod = "WECHAT_MY"
-	PaymentMethodWeChatChina    PaymentMethod = "WECHAT_CN"
+	PaymentMethodWeChatMalaysia    PaymentMethod = "WECHAT_MY"
+	PaymentMethodWeChatChina       PaymentMethod = "WECHAT_CN"
+	PaymentMethodBoostMalaysia     PaymentMethod = "BOOST_MY"
+	PaymentMethodPrestoMalaysia    PaymentMethod = "PRESTO_MY"
+	PaymentMethodAlipayChina       PaymentMethod = "ALIPAY_CN"
+	PaymentMethodTnGMalaysia       PaymentMethod = "TNG_MY"
+	PaymentMethodGrabMalaysia      PaymentMethod = "GRABPAY_MY"
+	PaymentMethodMaybankMalaysia   PaymentMethod = "MAYBANK_MY"
+	PaymentMethodRazerPayMalaysia  PaymentMethod = "RAZERPAY_MY"
+	PaymentMethodMCashMalaysia     PaymentMethod = "MCASH_MY"
+	PaymentMethodShopeePayMalaysia PaymentMethod = "SHOPEEPAY_MY"
+	PaymentMethodFpxMalaysia       PaymentMethod = "FPX_MY"
+	PaymentMethodGoBizMalaysia     PaymentMethod = "GOBIZ_MY"
 )
 
 // CreatePaymentCheckoutRequest :
@@ -64,7 +72,7 @@ func (c *Client) CreatePaymentCheckout(
 	ctx context.Context,
 	req CreatePaymentCheckoutRequest,
 ) (*CreatePaymentCheckoutResponse, error) {
-	req.LayoutVersion = LayoutV2
+	req.LayoutVersion = LayoutV3
 	if req.Method == nil {
 		req.Method = make([]PaymentMethod, 0)
 	}

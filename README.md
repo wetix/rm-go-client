@@ -1,6 +1,21 @@
-### RevenueMonster Golang Client
+<p align="center">
+    <a href="https://github.com/si3nloong/rm-go-client/releases"><img src="https://img.shields.io/github/v/tag/si3nloong/rm-go-client" alt="semver tag" title="semver tag"/></a>
+    <a href="https://goreportcard.com/report/github.com/si3nloong/rm-go-client"><img src="https://goreportcard.com/badge/github.com/si3nloong/rm-go-client" alt="go report card" title="go report card"/></a>
+    <a href="https://github.com/si3nloong/rm-go-client/blob/master/LICENSE"><img src="https://img.shields.io/github/license/si3nloong/rm-go-client" alt="license" title="license"/></a>
+</p>
 
-Apart from the official [rm-sdk-go](https://github.com/RevenueMonster/rm-sdk-go) doesn't support `context.Context` and `jaeger` tracing, and this repository is mainly to cover this two core elements.
+# RevenueMonster Go Client
+
+> Simplified version of rm sdk.
+
+Apart from the official [rm-sdk-go](https://github.com/RevenueMonster/rm-sdk-go) doesn't support `context.Context` and [opentracing](https://github.com/opentracing/opentracing-go), and this repository is mainly to cover this two core elements.
+
+## ✨ Features
+
+- simple and mininal (no extra functions other than payment)
+- support [Jaeger](https://www.jaegertracing.io/)
+- support `context.Context`
+- support decentralize access token store
 
 
 ```go
@@ -39,3 +54,9 @@ func main() {
     }
 }
 ```
+
+## 📄 License
+
+[MIT](https://github.com/si3nloong/sqlike/blob/master/LICENSE)
+
+Copyright (c) 2021-present, SianLoong Lee
