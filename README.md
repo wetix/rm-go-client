@@ -35,11 +35,13 @@ func main() {
     pub, _ := ioutil.ReadFile("../test/server_pub.pem")
 
     client := rm.NewClient(
-        "1599646279297591629",
-        "NekiDbnNHbHLWdRmbqtwBCqywfYkVVnE",
-        pk,
-        pub,
-        true,
+		rm.Config{
+			ClientID:     "1599646279297591629",
+			ClientSecret: "NekiDbnNHbHLWdRmbqtwBCqywfYkVVnE",
+			PrivateKey:   pk,
+			PublicKey:    pub,
+			Sandbox:      true, // determine whether it's using sandbox environment
+		},
     )
 
     req := rm.CreatePaymentCheckoutRequest{}
