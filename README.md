@@ -17,6 +17,7 @@ Apart from the official [rm-sdk-go](https://github.com/RevenueMonster/rm-sdk-go)
 - support `context.Context`
 - support decentralize access token store
 
+## 📝 How to use?
 
 ```go
 import (
