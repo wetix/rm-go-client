@@ -15,17 +15,20 @@ func TestRMClient(t *testing.T) {
 	pub, _ := ioutil.ReadFile("../test/server_pub.pem")
 
 	client := NewClient(
-		"1599646279297591629",
-		"NekiDbnNHbHLWdRmbqtwBCqywfYkVVnE",
-		pk,
-		pub,
-		true,
+		Config{
+			ClientID:     "1599646279297591629",
+			ClientSecret: "NekiDbnNHbHLWdRmbqtwBCqywfYkVVnE",
+			PrivateKey:   pk,
+			PublicKey:    pub,
+			Sandbox:      true,
+		},
 	)
 
 	req := CreatePaymentCheckoutRequest{}
 	req.Order.ID = uniuri.NewLen(10)
 	req.Order.Title = "Testing #" + req.Order.ID
 	req.Order.Amount = 1000
+	req.Customer.UserID = "1234"
 	req.StoreID = "2808912573238362402"
 	req.NotifyURL = "https://www.google.com"
 	req.RedirectURL = "https://www.google.com"

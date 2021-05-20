@@ -35,6 +35,16 @@ var (
 	noopTracer = &opentracing.NoopTracer{}
 )
 
+type Config struct {
+	ClientID     string
+	ClientSecret string
+	PrivateKey   []byte
+	PublicKey    []byte
+	StoreID      string
+	Sandbox      bool
+	TokenSource  oauth2.TokenSource
+}
+
 // Client :
 type Client struct {
 	mu            sync.Mutex
@@ -47,32 +57,25 @@ type Client struct {
 	pk            *rsa.PrivateKey
 	pub           []byte
 	oauth2        oauth2.TokenSource
+	storeID       string
 }
 
 // NewClient :
-func NewClient(
-	clientID string,
-	clientSecret string,
-	privateKey []byte,
-	publicKey []byte,
-	sandbox bool,
-	opts ...Option,
-) *Client {
+func NewClient(cfg Config) *Client {
 	var (
 		c   = new(Client)
 		err error
 	)
-	c.clientID = clientID
-	c.clientSecret = clientSecret
-	c.oauth2 = c
+	c.clientID = cfg.ClientID
+	c.clientSecret = cfg.ClientSecret
 	c.oauthEndpoint = "https://oauth.revenuemonster.my"
 	c.openEndpoint = "https://open.revenuemonster.my"
-	if sandbox {
+	if cfg.Sandbox {
 		c.oauthEndpoint = "https://sb-oauth.revenuemonster.my"
 		c.openEndpoint = "https://sb-open.revenuemonster.my"
 	}
 
-	block, _ := pem.Decode(privateKey)
+	block, _ := pem.Decode(cfg.PrivateKey)
 	if block == nil {
 		panic("invalid format of private key")
 	}
@@ -81,13 +84,25 @@ func NewClient(
 	if err != nil {
 		panic(err)
 	}
-	for _, opt := range opts {
-		opt(c)
+	c.pub = cfg.PublicKey
+	if cfg.TokenSource != nil {
+		c.oauth2 = cfg.TokenSource
+	} else {
+		c.oauth2 = c
+	}
+
+	// if store id is empty, get store id
+	if cfg.StoreID == "" {
+		resp, err := c.GetStores(context.Background())
+		if err != nil {
+			panic(err)
+		}
+		c.storeID = resp.Items[0].ID
 	}
 	return c
 }
 
-func (c *Client) MaybeStartSpanFromContext(ctx context.Context, operationName string) opentracing.Span {
+func (c *Client) maybeStartSpanFromContext(ctx context.Context, operationName string) opentracing.Span {
 	var span opentracing.Span
 	if sp := opentracing.SpanFromContext(ctx); sp != nil {
 		span, _ = opentracing.StartSpanFromContext(ctx, operationName)
@@ -113,7 +128,7 @@ func (c *Client) do(
 		err    error
 	)
 
-	span := c.MaybeStartSpanFromContext(ctx, operationName)
+	span := c.maybeStartSpanFromContext(ctx, operationName)
 	defer span.Finish()
 
 	defer func() {

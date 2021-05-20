@@ -50,6 +50,12 @@ type CreatePaymentCheckoutRequest struct {
 		Amount         uint   `json:"amount"`
 		Currency       string `json:"currencyType"`
 	} `json:"order"`
+	Customer struct {
+		UserID      string `json:"userId"`
+		Email       string `json:"email,omitempty"`
+		CountryCode string `json:"countryCode,omitempty"`
+		PhoneNumber string `json:"phoneNumber,omitempty"`
+	} `json:"customer"`
 	Type          PaymentType     `json:"type"`
 	Method        []PaymentMethod `json:"method"`
 	StoreID       string          `json:"storeId"`
@@ -83,16 +89,20 @@ func (c *Client) CreatePaymentCheckout(
 		req.Order.Currency = "MYR"
 	}
 	if req.StoreID == "" {
-		res, err := c.GetStores(ctx)
-		if err != nil {
-			return nil, err
-		}
+		if c.storeID == "" {
+			res, err := c.GetStores(ctx)
+			if err != nil {
+				return nil, err
+			}
 
-		if len(res.Items) == 0 {
-			return nil, errors.New("no available store to init payment")
-		}
+			if len(res.Items) == 0 {
+				return nil, errors.New("no available store to init payment")
+			}
 
-		req.StoreID = res.Items[0].ID
+			req.StoreID = res.Items[0].ID
+		} else {
+			req.StoreID = c.storeID
+		}
 	}
 
 	resp := new(CreatePaymentCheckoutResponse)

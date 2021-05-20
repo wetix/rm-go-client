@@ -61,6 +61,10 @@ func (c *Client) RequestAccessToken() (*GetAccessTokenResponse, error) {
 	}
 
 	b, err = ioutil.ReadAll(res.Body)
+	if err != nil {
+		return nil, err
+	}
+
 	dest := GetAccessTokenResponse{}
 	if err := json.Unmarshal(b, &dest); err != nil {
 		return nil, err
