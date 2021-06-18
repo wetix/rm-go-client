@@ -22,7 +22,7 @@ import (
 	"github.com/dchest/uniuri"
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
-	"github.com/opentracing/opentracing-go/log"
+	jlog "github.com/opentracing/opentracing-go/log"
 	"github.com/valyala/bytebufferpool"
 	"golang.org/x/oauth2"
 )
@@ -154,7 +154,7 @@ func (c *Client) do(
 	ext.Component.Set(span, "rm-go-client")
 
 	span.LogFields(
-		log.String("http.request.body", string(b)),
+		jlog.String("http.request.body", string(b)),
 	)
 
 	if len(b) > 0 &&
@@ -232,7 +232,7 @@ func (c *Client) do(
 	}
 
 	span.LogFields(
-		log.String("http.response.body", string(b)),
+		jlog.String("http.response.body", string(b)),
 	)
 
 	if res.StatusCode < 200 || res.StatusCode >= 400 {

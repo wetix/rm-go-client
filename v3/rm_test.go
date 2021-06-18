@@ -14,6 +14,7 @@ func TestRMClient(t *testing.T) {
 	pk, _ := ioutil.ReadFile("../test/pk.pem")
 	pub, _ := ioutil.ReadFile("../test/server_pub.pem")
 
+	storeID := "2808912573238362402"
 	client := NewClient(
 		Config{
 			ClientID:     "1599646279297591629",
@@ -29,7 +30,7 @@ func TestRMClient(t *testing.T) {
 	req.Order.Title = "Testing #" + req.Order.ID
 	req.Order.Amount = 1000
 	req.Customer.UserID = "1234"
-	req.StoreID = "2808912573238362402"
+	req.StoreID = storeID
 	req.NotifyURL = "https://www.google.com"
 	req.RedirectURL = "https://www.google.com"
 	resp, err := client.GetStores(ctx)
@@ -44,4 +45,20 @@ func TestRMClient(t *testing.T) {
 	pymt, err := client.GetPaymentByOrderID(ctx, "128200910090623482313")
 	require.NoError(t, err)
 	require.Equal(t, "SUCCESS", pymt.Code)
+
+	{
+		req := CreateTransactionQRRequest{}
+		req.Amount = 10000
+		req.Type = "STATIC"
+		req.Order.Title = "Payment Test"
+		req.CurrencyType = "MYR"
+		req.IsPreFillAmount = false
+		req.Method = make([]string, 0)
+		req.RedirectURL = "www.google.com"
+		req.Expiry.Type = "PERMANENT"
+		req.StoreID = storeID
+		resp, err := client.CreateTransactionQR(ctx, req)
+		require.NoError(t, err)
+		require.NotEmpty(t, resp.Item.QrCodeURL)
+	}
 }
