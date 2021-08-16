@@ -71,7 +71,7 @@ func (c *Client) RequestAccessToken() (*GetAccessTokenResponse, error) {
 	}
 
 	if res.StatusCode < 200 || res.StatusCode >= 400 {
-		return nil, &Error{raw: b}
+		return nil, newError(b)
 	}
 
 	c.token = &oauth2.Token{
