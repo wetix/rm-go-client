@@ -45,6 +45,7 @@ func (c *Client) RequestAccessToken() (*GetAccessTokenResponse, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	reqUrl, _ := url.Parse(c.oauthEndpoint + "/v1/token")
 	req := new(http.Request)
 	req.Method = "POST"

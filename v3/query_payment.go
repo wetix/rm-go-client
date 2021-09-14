@@ -39,16 +39,16 @@ type GetPaymentByOrderIDResponse struct {
 		TerminalID string `json:"terminalId"`
 		Payee      struct {
 		} `json:"payee"`
-		CurrencyType  string    `json:"currencyType"`
-		BalanceAmount int       `json:"balanceAmount"`
-		Platform      string    `json:"platform"`
-		Method        string    `json:"method"`
-		TransactionAt time.Time `json:"transactionAt"`
-		Type          string    `json:"type"`
-		Status        string    `json:"status"`
-		Region        string    `json:"region"`
-		CreatedAt     time.Time `json:"createdAt"`
-		UpdatedAt     time.Time `json:"updatedAt"`
+		CurrencyType  string        `json:"currencyType"`
+		BalanceAmount int           `json:"balanceAmount"`
+		Platform      string        `json:"platform"`
+		Method        string        `json:"method"`
+		TransactionAt time.Time     `json:"transactionAt"`
+		Type          string        `json:"type"`
+		Status        PaymentStatus `json:"status"`
+		Region        string        `json:"region"`
+		CreatedAt     time.Time     `json:"createdAt"`
+		UpdatedAt     time.Time     `json:"updatedAt"`
 	} `json:"item"`
 	Code string `json:"code"`
 }

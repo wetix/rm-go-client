@@ -5,41 +5,6 @@ import (
 	"errors"
 )
 
-type layout string
-
-// layout versions :
-const (
-	LayoutV1 layout = "v1"
-	LayoutV2 layout = "v2"
-	LayoutV3 layout = "v3"
-)
-
-// types :
-type (
-	PaymentType   string
-	PaymentMethod string
-)
-
-// payment types :
-const (
-	PaymentTypeWeb    PaymentType = "WEB_PAYMENT"
-	PaymentTypeMobile PaymentType = "MOBILE_PAYMENT"
-
-	PaymentMethodWeChatMalaysia    PaymentMethod = "WECHAT_MY"
-	PaymentMethodWeChatChina       PaymentMethod = "WECHAT_CN"
-	PaymentMethodBoostMalaysia     PaymentMethod = "BOOST_MY"
-	PaymentMethodPrestoMalaysia    PaymentMethod = "PRESTO_MY"
-	PaymentMethodAlipayChina       PaymentMethod = "ALIPAY_CN"
-	PaymentMethodTnGMalaysia       PaymentMethod = "TNG_MY"
-	PaymentMethodGrabMalaysia      PaymentMethod = "GRABPAY_MY"
-	PaymentMethodMaybankMalaysia   PaymentMethod = "MAYBANK_MY"
-	PaymentMethodRazerPayMalaysia  PaymentMethod = "RAZERPAY_MY"
-	PaymentMethodMCashMalaysia     PaymentMethod = "MCASH_MY"
-	PaymentMethodShopeePayMalaysia PaymentMethod = "SHOPEEPAY_MY"
-	PaymentMethodFpxMalaysia       PaymentMethod = "FPX_MY"
-	PaymentMethodGoBizMalaysia     PaymentMethod = "GOBIZ_MY"
-)
-
 // CreatePaymentCheckoutRequest :
 type CreatePaymentCheckoutRequest struct {
 	Order struct {
@@ -89,7 +54,9 @@ func (c *Client) CreatePaymentCheckout(
 		req.Order.Currency = "MYR"
 	}
 	if req.StoreID == "" {
-		if c.storeID == "" {
+		if c.storeID != "" {
+			req.StoreID = c.storeID
+		} else {
 			res, err := c.GetStores(ctx)
 			if err != nil {
 				return nil, err
@@ -100,8 +67,6 @@ func (c *Client) CreatePaymentCheckout(
 			}
 
 			req.StoreID = res.Items[0].ID
-		} else {
-			req.StoreID = c.storeID
 		}
 	}
 
