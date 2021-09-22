@@ -1,10 +1,10 @@
-<p align="center">
-    <a href="https://github.com/si3nloong/rm-go-client/releases"><img src="https://img.shields.io/github/v/tag/si3nloong/rm-go-client" alt="semver tag" title="semver tag"/></a>
-    <a href="https://goreportcard.com/report/github.com/si3nloong/rm-go-client"><img src="https://goreportcard.com/badge/github.com/si3nloong/rm-go-client" alt="go report card" title="go report card"/></a>
-    <a href="https://github.com/si3nloong/rm-go-client/blob/main/LICENSE"><img src="https://img.shields.io/github/license/si3nloong/rm-go-client" alt="license" title="license"/></a>
-</p>
-
 # RevenueMonster Go Client
+
+[![Build](https://github.com/si3nloong/rm-go-client/workflows/build/badge.svg?branch=main)](https://github.com/si3nloong/rm-go-client/actions?query=workflow%3Atest)
+[![Release](https://img.shields.io/github/v/tag/si3nloong/rm-go-client)](https://github.com/si3nloong/rm-go-client/releases)
+[![Go Report](https://goreportcard.com/badge/github.com/si3nloong/rm-go-client)](https://goreportcard.com/report/github.com/si3nloong/rm-go-client)
+[![Go Coverage](https://codecov.io/gh/si3nloong/rm-go-client/branch/main/graph/badge.svg)](https://codecov.io/gh/si3nloong/rm-go-client)
+[![LICENSE](https://img.shields.io/github/license/si3nloong/rm-go-client)](https://github.com/si3nloong/rm-go-client/blob/main/LICENSE)
 
 > Simplified version of rm sdk.
 
@@ -16,6 +16,7 @@ Apart from the official [rm-sdk-go](https://github.com/RevenueMonster/rm-sdk-go)
 - support [Jaeger](https://www.jaegertracing.io/)
 - support `context.Context`
 - support decentralize access token store
+- include test
 
 ## 📝 How to use?
 
