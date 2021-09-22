@@ -1,7 +1,7 @@
 <p align="center">
     <a href="https://github.com/si3nloong/rm-go-client/releases"><img src="https://img.shields.io/github/v/tag/si3nloong/rm-go-client" alt="semver tag" title="semver tag"/></a>
     <a href="https://goreportcard.com/report/github.com/si3nloong/rm-go-client"><img src="https://goreportcard.com/badge/github.com/si3nloong/rm-go-client" alt="go report card" title="go report card"/></a>
-    <a href="https://github.com/si3nloong/rm-go-client/blob/master/LICENSE"><img src="https://img.shields.io/github/license/si3nloong/rm-go-client" alt="license" title="license"/></a>
+    <a href="https://github.com/si3nloong/rm-go-client/blob/main/LICENSE"><img src="https://img.shields.io/github/license/si3nloong/rm-go-client" alt="license" title="license"/></a>
 </p>
 
 # RevenueMonster Go Client
@@ -60,6 +60,6 @@ func main() {
 
 ## 📄 License
 
-[MIT](https://github.com/si3nloong/rm-go-client/blob/master/LICENSE)
+[MIT](https://github.com/si3nloong/rm-go-client/blob/main/LICENSE)
 
 Copyright (c) 2021-present, SianLoong Lee
