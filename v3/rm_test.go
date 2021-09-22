@@ -2,6 +2,7 @@ package rm
 
 import (
 	"context"
+	"errors"
 	"io/ioutil"
 	"testing"
 
@@ -47,9 +48,36 @@ func TestRmClient(t *testing.T) {
 	require.NotEmpty(t, res.Item.CheckoutID)
 	require.NotEmpty(t, res.Item.URL)
 
-	pymt, err := client.GetPaymentByOrderID(ctx, "128200910090623482313")
+	order, err := client.GetPaymentByCheckoutID(ctx, res.Item.CheckoutID)
 	require.NoError(t, err)
-	require.Equal(t, "SUCCESS", pymt.Code)
+	require.Equal(t, ResponseSuccess, order.Code)
+	require.Equal(t, req.Order.ID, order.Item.Order.ID)
+	require.Equal(t, res.Item.CheckoutID, order.Item.ID)
+	require.Equal(t, req.Order.Title, order.Item.Order.Title)
+	require.Equal(t, req.Order.Amount, order.Item.Order.Amount)
+	require.Equal(t, req.NotifyURL, order.Item.NotifyURL)
+	require.Equal(t, req.RedirectURL, order.Item.RedirectURL)
+
+	{
+		pymt, err := client.GetPaymentByOrderID(ctx, "128200910090623482313")
+		require.NoError(t, err)
+		require.Equal(t, ResponseSuccess, pymt.Code)
+	}
+
+	// invalid order id
+	{
+		_, err := client.GetPaymentByOrderID(ctx, "xxx")
+		require.Error(t, err)
+		require.True(t, errors.Is(err, ErrTransactionNotFound))
+	}
+
+	{
+		req := RefundPaymentRequest{}
+		req.TransactionID = "210922094709010322801968"
+		req.Reason = "Not received goods"
+		_, err := client.RefundPayment(ctx, req)
+		require.True(t, errors.Is(err, ErrPaymentAlreadyRefunded))
+	}
 
 	{
 		req := CreateTransactionQRRequest{}
@@ -66,4 +94,5 @@ func TestRmClient(t *testing.T) {
 		require.NoError(t, err)
 		require.NotEmpty(t, resp.Item.QrCodeURL)
 	}
+
 }

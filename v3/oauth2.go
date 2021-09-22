@@ -71,7 +71,7 @@ func (c *Client) RequestAccessToken() (*GetAccessTokenResponse, error) {
 		return nil, err
 	}
 
-	if res.StatusCode < 200 || res.StatusCode >= 400 {
+	if res.StatusCode < http.StatusOK || res.StatusCode >= http.StatusBadRequest {
 		return nil, newError(reqUrl.String(), b, respBytes)
 	}
 

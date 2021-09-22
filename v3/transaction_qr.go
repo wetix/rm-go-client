@@ -85,6 +85,9 @@ func (c *Client) CreateTransactionQR(
 	ctx context.Context,
 	req CreateTransactionQRRequest,
 ) (*CreateTransactionQRResponse, error) {
+	if req.CurrencyType == "" {
+		req.CurrencyType = "MYR"
+	}
 	resp := new(CreateTransactionQRResponse)
 	if err := c.do(
 		ctx,

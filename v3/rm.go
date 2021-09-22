@@ -31,10 +31,6 @@ const (
 	ResponseSuccess = "SUCCESS"
 )
 
-var (
-	noopTracer = &opentracing.NoopTracer{}
-)
-
 type Config struct {
 	ClientID     string
 	ClientSecret string
@@ -43,11 +39,13 @@ type Config struct {
 	StoreID      string
 	Sandbox      bool
 	TokenSource  oauth2.TokenSource
+	Tracer       opentracing.Tracer
 }
 
 // Client :
 type Client struct {
 	mu            sync.Mutex
+	tracer        opentracing.Tracer
 	clientID      string
 	clientSecret  string
 	oauthEndpoint string
@@ -67,6 +65,10 @@ func NewClient(cfg Config) *Client {
 	)
 	c.clientID = cfg.ClientID
 	c.clientSecret = cfg.ClientSecret
+	c.tracer = &opentracing.NoopTracer{}
+	if cfg.Tracer != nil {
+		c.tracer = cfg.Tracer
+	}
 	c.oauthEndpoint = "https://oauth.revenuemonster.my"
 	c.openEndpoint = "https://open.revenuemonster.my"
 	if cfg.Sandbox {
@@ -107,7 +109,7 @@ func (c *Client) maybeStartSpanFromContext(ctx context.Context, operationName st
 	if sp := opentracing.SpanFromContext(ctx); sp != nil {
 		span, _ = opentracing.StartSpanFromContext(ctx, operationName)
 	} else {
-		span = noopTracer.StartSpan(operationName)
+		span = c.tracer.StartSpan(operationName)
 	}
 	return span
 }
@@ -226,16 +228,23 @@ func (c *Client) do(
 
 	ext.HTTPStatusCode.Set(span, uint16(res.StatusCode))
 
+	// skip to unmarshal if return status code is 204
+	if res.StatusCode == http.StatusNoContent {
+		return nil
+	}
+
 	respBytes, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		return err
 	}
 
+	// log.Println(string(respBytes))
+
 	span.LogFields(
 		jlog.String("http.response.body", string(respBytes)),
 	)
 
-	if res.StatusCode < 200 || res.StatusCode >= 400 {
+	if res.StatusCode < http.StatusOK || res.StatusCode >= http.StatusBadRequest {
 		return newError(reqUrl.String(), b, respBytes)
 	}
 

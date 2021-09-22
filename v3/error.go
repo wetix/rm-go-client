@@ -9,15 +9,51 @@ import (
 
 // error codes :
 const (
+	errTemplate = "rm: %s"
+
+	ErrorCodePaymentAlreadyRefunded           = "PAYMENT_FULLY_REFUNDED"
 	ErrorCodeTransactionNotFound              = "TRANSACTION_NOT_FOUND"
 	ErrorCodeStoreNotFound                    = "STORE_NOT_FOUND"
+	ErrorCodeValidationError                  = "VALIDATION_ERROR"
+	ErrorCodeRefundAmountExceedPerDay         = "PAYMENT_REFUND_AMOUNT_EXCEED_PER_DAY"
 	ErrorCodeMerchantSettlementAccNotVerified = "MERCHANT_SETTLEMENT_ACCOUNT_NOT_VERIFIED"
 )
 
+// error to compare, you may compare using errors.Is(err, rm.ErrPaymentAlreadyRefunded)
+var (
+	ErrPaymentAlreadyRefunded  = newErrorCode(ErrorCodePaymentAlreadyRefunded)
+	ErrTransactionNotFound     = newErrorCode(ErrorCodeTransactionNotFound)
+	ErrStoreNotFound           = newErrorCode(ErrorCodeStoreNotFound)
+	ErrRefundExceedLimitPerDay = newErrorCode(ErrorCodeRefundAmountExceedPerDay)
+	ErrValidation              = newErrorCode(ErrorCodeValidationError)
+)
+
+type errorCode struct{ id string }
+
+var (
+	_ error     = (*errorCode)(nil)
+	_ ErrorCode = (*errorCode)(nil)
+)
+
+func newErrorCode(id string) error {
+	return &errorCode{id: id}
+}
+
+func (err errorCode) isCode(id string) bool {
+	return err.id == id
+}
+
+func (err errorCode) Error() string {
+	return fmt.Sprintf(errTemplate, err.id)
+}
+
+type ErrorCode interface {
+	isCode(id string) bool
+}
+
 // Error :
 type Error struct {
-	Code        string
-	Msg         string
+	code        string
 	url         string
 	rawRequest  []byte
 	rawResponse []byte
@@ -30,17 +66,28 @@ var (
 
 func newError(url string, reqBytes, respBytes []byte) *Error {
 	e := new(Error)
-	e.Code = strings.ToUpper(strings.TrimSpace(gjson.GetBytes(respBytes, "error.code").String()))
-	e.Msg = strings.TrimSpace(gjson.GetBytes(respBytes, "error.message").String())
+	e.code = strings.ToUpper(strings.TrimSpace(gjson.GetBytes(respBytes, "error.code").String()))
 	e.url = url
 	e.rawResponse = respBytes
 	e.rawRequest = reqBytes
 	return e
 }
 
+func (e Error) isCode(errID string) bool {
+	return e.code == errID
+}
+
+func (e Error) Is(err error) bool {
+	v, ok := err.(ErrorCode)
+	if ok {
+		return v.isCode(e.code)
+	}
+	return e.Error() == err.Error()
+}
+
 // Error :
 func (e Error) Error() string {
-	return "rm: " + string(e.Code)
+	return fmt.Sprintf(errTemplate, e.code)
 }
 
 func (e Error) Format(f fmt.State, verb rune) {

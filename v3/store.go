@@ -43,7 +43,7 @@ func (c *Client) GetStores(ctx context.Context) (*GetStoresResponse, error) {
 		ctx,
 		"get_stores",
 		"get",
-		c.openEndpoint+"/v3/stores?limit=1",
+		c.openEndpoint+"/v3/stores?limit=100",
 		nil,
 		resp,
 	); err != nil {

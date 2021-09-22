@@ -1,6 +1,8 @@
 package rm
 
-import "context"
+import (
+	"context"
+)
 
 // RefundPaymentRequest :
 type RefundPaymentRequest struct {
@@ -20,11 +22,26 @@ type RefundPaymentResponse struct {
 // RefundPayment :
 func (c *Client) RefundPayment(
 	ctx context.Context,
-	orderID string,
-	reason string,
+	req RefundPaymentRequest,
 ) (*RefundPaymentResponse, error) {
-	req := RefundPaymentRequest{}
-	// req.Type = "FULL"
+	pymt, err := c.GetPaymentByTransactionID(ctx, req.TransactionID)
+	if err != nil {
+		return nil, err
+	}
+
+	// if amount is zero, we will perform full refunded
+	if req.Refund.Amount == 0 {
+		req.Refund.Type = "FULL"
+		// FIXME: support partial refund
+		// if orderResp.Item.Order.Amount < orderResp.Item.BalanceAmount {
+		// }
+		req.Refund.Amount = pymt.Item.Order.Amount
+	}
+
+	if req.Refund.CurrencyType == "" {
+		req.Refund.CurrencyType = "MYR"
+	}
+
 	resp := new(RefundPaymentResponse)
 	if err := c.do(
 		ctx,
