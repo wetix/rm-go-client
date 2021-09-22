@@ -1,6 +1,6 @@
 # RevenueMonster Go Client
 
-[![Build](https://github.com/si3nloong/rm-go-client/workflows/build/badge.svg?branch=main)](https://github.com/si3nloong/rm-go-client/actions?query=workflow%3Atest)
+[![Build](https://github.com/si3nloong/rm-go-client/workflows/Test/badge.svg?branch=main)](https://github.com/si3nloong/rm-go-client/actions?query=workflow%3Atest)
 [![Release](https://img.shields.io/github/v/tag/si3nloong/rm-go-client)](https://github.com/si3nloong/rm-go-client/releases)
 [![Go Report](https://goreportcard.com/badge/github.com/si3nloong/rm-go-client)](https://goreportcard.com/report/github.com/si3nloong/rm-go-client)
 [![Go Coverage](https://codecov.io/gh/si3nloong/rm-go-client/branch/main/graph/badge.svg)](https://codecov.io/gh/si3nloong/rm-go-client)
