@@ -26,7 +26,7 @@ func mockRmClient() *Client {
 	)
 }
 
-func TestRMClient(t *testing.T) {
+func TestRmClient(t *testing.T) {
 	ctx := context.Background()
 	client := mockRmClient()
 
@@ -62,8 +62,8 @@ func TestRMClient(t *testing.T) {
 		req.RedirectURL = "www.google.com"
 		req.Expiry.Type = "PERMANENT"
 		req.StoreID = client.storeID
-		// resp, err := client.CreateTransactionQR(ctx, req)
-		// require.NoError(t, err)
-		// require.NotEmpty(t, resp.Item.QrCodeURL)
+		resp, err := client.CreateTransactionQR(ctx, req)
+		require.NoError(t, err)
+		require.NotEmpty(t, resp.Item.QrCodeURL)
 	}
 }

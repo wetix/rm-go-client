@@ -1,7 +1,9 @@
 package rm
 
 import (
+	"bytes"
 	"context"
+	"io"
 	"io/ioutil"
 	"os"
 	"testing"
@@ -32,4 +34,11 @@ func TestWebhook(t *testing.T) {
 	// file content shouldn't empty
 	_, exp := ioutil.ReadAll(f)
 	require.NoError(t, exp)
+
+	_, err = client.VerifyWebhook(ctx, f)
+	require.Equal(t, io.EOF, err)
+
+	buf := bytes.NewBufferString(`{"data": "error"}`)
+	_, err = client.VerifyWebhook(ctx, buf)
+	require.Error(t, err)
 }

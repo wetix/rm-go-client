@@ -50,7 +50,6 @@ type Client struct {
 	mu            sync.Mutex
 	clientID      string
 	clientSecret  string
-	sandbox       bool
 	oauthEndpoint string
 	openEndpoint  string
 	token         *oauth2.Token
@@ -91,8 +90,9 @@ func NewClient(cfg Config) *Client {
 		c.oauth2 = c
 	}
 
+	c.storeID = cfg.StoreID
 	// if store id is empty, get store id
-	if cfg.StoreID == "" {
+	if c.storeID == "" {
 		resp, err := c.GetStores(context.Background())
 		if err != nil {
 			panic(err)
@@ -226,20 +226,20 @@ func (c *Client) do(
 
 	ext.HTTPStatusCode.Set(span, uint16(res.StatusCode))
 
-	b, err = ioutil.ReadAll(res.Body)
+	respBytes, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		return err
 	}
 
 	span.LogFields(
-		jlog.String("http.response.body", string(b)),
+		jlog.String("http.response.body", string(respBytes)),
 	)
 
 	if res.StatusCode < 200 || res.StatusCode >= 400 {
-		return newError(b)
+		return newError(reqUrl.String(), b, respBytes)
 	}
 
-	err = json.Unmarshal(b, dest)
+	err = json.Unmarshal(respBytes, dest)
 	if err != nil {
 		return err
 	}

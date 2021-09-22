@@ -61,18 +61,18 @@ func (c *Client) RequestAccessToken() (*GetAccessTokenResponse, error) {
 		return nil, err
 	}
 
-	b, err = ioutil.ReadAll(res.Body)
+	respBytes, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		return nil, err
 	}
 
 	dest := GetAccessTokenResponse{}
-	if err := json.Unmarshal(b, &dest); err != nil {
+	if err := json.Unmarshal(respBytes, &dest); err != nil {
 		return nil, err
 	}
 
 	if res.StatusCode < 200 || res.StatusCode >= 400 {
-		return nil, newError(b)
+		return nil, newError(reqUrl.String(), b, respBytes)
 	}
 
 	c.token = &oauth2.Token{
