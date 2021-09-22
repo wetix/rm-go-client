@@ -44,7 +44,7 @@ type GetPaymentByOrderIDResponse struct {
 		Platform      string        `json:"platform"`
 		Method        string        `json:"method"`
 		TransactionAt time.Time     `json:"transactionAt"`
-		Type          string        `json:"type"`
+		Type          PaymentType   `json:"type"`
 		Status        PaymentStatus `json:"status"`
 		Region        string        `json:"region"`
 		CreatedAt     time.Time     `json:"createdAt"`
