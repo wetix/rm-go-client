@@ -27,6 +27,16 @@ func mockRmClient() *Client {
 	)
 }
 
+func emptyRmClient() *Client {
+	pk, _ := ioutil.ReadFile("../test/pk.pem")
+	pub, _ := ioutil.ReadFile("../test/server_pub.pem")
+	return NewClient(Config{
+		PrivateKey: pk,
+		PublicKey:  pub,
+		StoreID:    "xxx",
+	})
+}
+
 func TestRmClient(t *testing.T) {
 	ctx := context.Background()
 	client := mockRmClient()
@@ -95,4 +105,11 @@ func TestRmClient(t *testing.T) {
 		require.NotEmpty(t, resp.Item.QrCodeURL)
 	}
 
+	// expecting error
+	{
+		var emptyClient = emptyRmClient()
+		stores, err := emptyClient.GetStores(ctx)
+		require.Error(t, err)
+		require.Nil(t, stores)
+	}
 }
