@@ -5,6 +5,7 @@
 [![Go Report](https://goreportcard.com/badge/github.com/si3nloong/rm-go-client)](https://goreportcard.com/report/github.com/si3nloong/rm-go-client)
 [![Go Coverage](https://codecov.io/gh/si3nloong/rm-go-client/branch/main/graph/badge.svg)](https://codecov.io/gh/si3nloong/rm-go-client)
 [![LICENSE](https://img.shields.io/github/license/si3nloong/rm-go-client)](https://github.com/si3nloong/rm-go-client/blob/main/LICENSE)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsi3nloong%2Frm-go-client.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsi3nloong%2Frm-go-client?ref=badge_shield)
 
 > Simplified version of rm sdk.
 
@@ -64,3 +65,5 @@ func main() {
 [GPL-3.0-only](https://github.com/si3nloong/rm-go-client/blob/main/LICENSE)
 
 Copyright (c) 2021-present, SianLoong Lee
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsi3nloong%2Frm-go-client.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsi3nloong%2Frm-go-client?ref=badge_large)
