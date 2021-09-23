@@ -61,6 +61,6 @@ func main() {
 
 ## 📄 License
 
-[MIT](https://github.com/si3nloong/rm-go-client/blob/main/LICENSE)
+[GPL-3.0-only](https://github.com/si3nloong/rm-go-client/blob/main/LICENSE)
 
 Copyright (c) 2021-present, SianLoong Lee
