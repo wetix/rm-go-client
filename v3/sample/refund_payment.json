@@ -1,0 +1,52 @@
+{
+  "item": {
+    "store": {
+      "id": "1632209008580492359",
+      "name": "Senheng",
+      "imageUrl": "https://storage.googleapis.com/rm-prod-asset/img/store.png",
+      "addressLine1": "APAC Venture Sdn. Bhd.,  10 Boulevard,  Petaling Jaya",
+      "addressLine2": "",
+      "postCode": "47400",
+      "city": "Petaling Jaya",
+      "state": "Selangor",
+      "country": "Malaysia",
+      "countryCode": "60",
+      "phoneNumber": "377334080",
+      "geoLocation": {
+        "latitude": 3.132417,
+        "longitude": 101.614012
+      },
+      "status": "ACTIVE",
+      "createdAt": "2021-09-21T07:23:28Z",
+      "updatedAt": "2021-09-21T07:23:28Z"
+    },
+    "referenceId": "20210926111212800110171581001332781",
+    "transactionId": "210926114021310429352390",
+    "order": {
+      "id": "108210926114044197527",
+      "title": "WeTix Sdn Bhd (GSC)",
+      "detail": "",
+      "amount": 1750
+    },
+    "terminalId": "",
+    "payee": {
+      "userId": "1000000806285894"
+    },
+    "currencyType": "MYR",
+    "balanceAmount": 0,
+    "voucher": null,
+    "platform": "OPEN_API",
+    "method": "TNG",
+    "transactionAt": "2021-09-26T11:40:45Z",
+    "type": "WEB_MOBILE_PAYMENT",
+    "status": "FULL_REFUNDED",
+    "region": "MALAYSIA",
+    "extraInfo": {
+      "card": {}
+    },
+    "source": "",
+    "createdAt": "2021-09-26T11:40:21Z",
+    "updatedAt": "2021-10-05T03:47:11Z"
+  },
+  "code": "SUCCESS"
+}
