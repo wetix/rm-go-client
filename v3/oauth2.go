@@ -29,7 +29,7 @@ type GetAccessTokenResponse struct {
 func (c *Client) Token() (*oauth2.Token, error) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
-	if c.token == nil {
+	if c.token == nil || time.Now().UTC().After(c.token.Expiry) {
 		if _, err := c.RequestAccessToken(); err != nil {
 			return nil, err
 		}
@@ -79,7 +79,10 @@ func (c *Client) RequestAccessToken() (*GetAccessTokenResponse, error) {
 		AccessToken:  dest.AccessToken,
 		TokenType:    dest.TokenType,
 		RefreshToken: dest.RefreshToken,
-		Expiry:       time.Now().UTC().Add(time.Duration(dest.ExpiresIn) * time.Second),
+		// allow token to expires earlier 30min to prevent token expires issue
+		Expiry: time.Now().UTC().
+			Add(-30 * time.Minute).
+			Add(time.Duration(dest.ExpiresIn) * time.Second),
 	}
 	return &dest, nil
 }
