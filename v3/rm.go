@@ -10,6 +10,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"encoding/pem"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -78,7 +79,7 @@ func NewClient(cfg Config) *Client {
 
 	block, _ := pem.Decode(cfg.PrivateKey)
 	if block == nil {
-		panic("invalid format of private key")
+		panic("rm: invalid format of private key")
 	}
 
 	c.pk, err = x509.ParsePKCS1PrivateKey(block.Bytes)
@@ -93,14 +94,6 @@ func NewClient(cfg Config) *Client {
 	}
 
 	c.storeID = cfg.StoreID
-	// if store id is empty, get store id
-	if c.storeID == "" {
-		resp, err := c.GetStores(context.Background())
-		if err != nil {
-			panic(err)
-		}
-		c.storeID = resp.Items[0].ID
-	}
 	return c
 }
 
@@ -238,11 +231,13 @@ func (c *Client) do(
 		return err
 	}
 
-	// log.Println(string(respBytes))
-
 	span.LogFields(
 		jlog.String("http.response.body", string(respBytes)),
 	)
+
+	if res.StatusCode == http.StatusBadGateway {
+		return fmt.Errorf("rm: bad gateway on %s: %s", method, reqUrl.String())
+	}
 
 	if res.StatusCode < http.StatusOK || res.StatusCode >= http.StatusBadRequest {
 		return newError(reqUrl.String(), b, respBytes)

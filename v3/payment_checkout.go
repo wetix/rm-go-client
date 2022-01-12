@@ -57,13 +57,16 @@ func (c *Client) CreatePaymentCheckout(
 		if c.storeID != "" {
 			req.StoreID = c.storeID
 		} else {
+			// prevent concurrency race
+			c.mu.Lock()
+			defer c.mu.Lock()
 			res, err := c.GetStores(ctx)
 			if err != nil {
 				return nil, err
 			}
 
 			if len(res.Items) == 0 {
-				return nil, errors.New("no available store to init payment")
+				return nil, errors.New("rm: no available store to init payment")
 			}
 
 			req.StoreID = res.Items[0].ID
