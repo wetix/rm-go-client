@@ -97,6 +97,12 @@ func NewClient(cfg Config) *Client {
 	return c
 }
 
+func (c *Client) SetTokenSource(src oauth2.TokenSource) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	c.oauth2 = src
+}
+
 func (c *Client) maybeStartSpanFromContext(ctx context.Context, operationName string) opentracing.Span {
 	var span opentracing.Span
 	if sp := opentracing.SpanFromContext(ctx); sp != nil {
