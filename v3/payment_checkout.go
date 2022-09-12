@@ -23,6 +23,7 @@ type CreatePaymentCheckoutRequest struct {
 	} `json:"customer"`
 	Type             PaymentType     `json:"type"`
 	Method           []PaymentMethod `json:"method"`
+	ExcludeMethod    []string        `json:"excludeMethod"`
 	StoreID          string          `json:"storeId"`
 	RedirectURL      string          `json:"redirectUrl"`
 	NotifyURL        string          `json:"notifyUrl"`
