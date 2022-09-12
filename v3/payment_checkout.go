@@ -21,12 +21,13 @@ type CreatePaymentCheckoutRequest struct {
 		CountryCode string `json:"countryCode,omitempty"`
 		PhoneNumber string `json:"phoneNumber,omitempty"`
 	} `json:"customer"`
-	Type          PaymentType     `json:"type"`
-	Method        []PaymentMethod `json:"method"`
-	StoreID       string          `json:"storeId"`
-	RedirectURL   string          `json:"redirectUrl"`
-	NotifyURL     string          `json:"notifyUrl"`
-	LayoutVersion layout          `json:"layoutVersion"`
+	Type             PaymentType     `json:"type"`
+	Method           []PaymentMethod `json:"method"`
+	StoreID          string          `json:"storeId"`
+	RedirectURL      string          `json:"redirectUrl"`
+	NotifyURL        string          `json:"notifyUrl"`
+	LayoutVersion    layout          `json:"layoutVersion"`
+	ExpiresInSeconds int64           `json:"expiresInSeconds"`
 }
 
 // CreatePaymentCheckoutResponse :
