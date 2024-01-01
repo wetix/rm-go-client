@@ -1,4 +1,4 @@
-module github.com/si3nloong/rm-go-client
+module github.com/wetix/rm-go-client
 
 go 1.16
 

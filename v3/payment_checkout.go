@@ -45,7 +45,6 @@ func (c *Client) CreatePaymentCheckout(
 	ctx context.Context,
 	req CreatePaymentCheckoutRequest,
 ) (*CreatePaymentCheckoutResponse, error) {
-	req.LayoutVersion = LayoutV3
 	if req.Method == nil {
 		req.Method = make([]PaymentMethod, 0)
 	}

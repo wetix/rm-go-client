@@ -7,6 +7,7 @@ const (
 	LayoutV1 layout = "v1"
 	LayoutV2 layout = "v2"
 	LayoutV3 layout = "v3"
+	LayoutV4 layout = "v4"
 )
 
 // types :
